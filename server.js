@@ -7,7 +7,7 @@ const app = express();
 
 // Basic middleware
 app.use(cors({
-  origin: 'https://www.noon-talks.online',
+  origin: 'https://noontalks.vercel.app/',
   methods: ['GET', 'POST'],
   credentials: true,
   optionsSuccessStatus: 200
