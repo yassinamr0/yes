@@ -8,7 +8,7 @@ const app = express();
 // Basic middleware
 app.use(cors({
   origin: 'https://noontalks.vercel.app/',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
   optionsSuccessStatus: 200
 }));
@@ -106,6 +106,23 @@ app.get('/admin/users', adminAuth, async (req, res) => {
     const users = await User.find().sort('-createdAt');
     res.json(users);
   } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// ✅ Delete user route
+app.delete('/admin/users/:id', adminAuth, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const deleted = await User.findByIdAndDelete(userId);
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Delete user error:', error);
     res.status(500).json({ message: error.message });
   }
 });
