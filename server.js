@@ -56,6 +56,11 @@ const generateCode = async (length = 6) => {
   return code;
 };
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ message: 'Noon Backend is running', status: 'ok' });
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
